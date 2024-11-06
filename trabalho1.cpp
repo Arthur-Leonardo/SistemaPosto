@@ -7,12 +7,11 @@
 
 int main(void){
 	setlocale(LC_ALL, "Portuguese");
-	int op, pedido[5],n, i, merc, quantMerc;
+	int op, pedido[5],n = 0, i, merc = 0, quantMerc = 0, quantProd =0, mercadorias[5] = {0,0,0,0,0};
 	float troco, pCombustivel, rCombustivel, valMerc, totalMerc, litragem;
 	char tipo;
 	printf("\n Informe o caixa troco: ");
 	scanf("%f", &troco);
-	n =0;
 	do{
 		printf("\n Bem Vindo aos Postos Tradição! Escolha a opção que você deseja:");
 		printf("\n 1 - Combustivel");
@@ -50,6 +49,7 @@ int main(void){
 				litragem = rCombustivel/pCombustivel;
 			break;
 		case 2:
+			
 			do{
 				printf("\n Qual mercadoria você deseja?");
 				printf("\n 1- Bala 	         R$0,20");
@@ -84,17 +84,28 @@ int main(void){
 					valMerc = 6.00;
 					break;
 				}
-			totalMerc = quantMerc * valMerc;
+				quantProd++;
+				mercadorias[merc - 1] += 1;
+				totalMerc = quantMerc * valMerc;
 				break;
 		case 3:
 			
-			pedido[n] += totalMerc + litragem;
-
+			pedido[n] = totalMerc + litragem;
+			printf("\n Pedido %d", n+1);
 			printf("\n Sua compra foi finalizada!");
-			printf("\n Produtos: ");
-			printf("\n Produto 1: %d UN X %.2f     total: %.2f",quantMerc, valMerc, totalMerc);
-			printf("\n Valor de combustível total: %.2f", litragem);
+			if(quantProd != 0){
+				for(i=0; i<=quantProd; i++){
+					printf("Produto %d:",i+1);
+					
+				}
+			}
+			printf("\n Valor de combustível total: %.2f \n", litragem);
 			n++;
+			totalMerc = 0;
+			litragem = 0;
+			quantMerc = 0;
+			valMerc = 0;
+			quantProd = 0;
 			break;
 		case 4:
 			
