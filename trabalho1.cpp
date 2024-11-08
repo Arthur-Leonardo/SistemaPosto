@@ -1,3 +1,4 @@
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
@@ -7,8 +8,8 @@
 
 int main(void){
 	setlocale(LC_ALL, "Portuguese");
-	int op, pedido[5],n = 0, i, merc = 0, quantMerc = 0, quantProd =0, mercadorias[5] = {0,0,0,0,0};
-	float troco, pCombustivel, rCombustivel, valMerc, totalMerc, litragem;
+	int op, n = 0, p=0, i = 0, merc = 0, quantMerc [5], quantProd =0, mercadorias[5] = {0,0,0,0,0};
+	float troco, pCombustivel, rCombustivel, valMerc[5], pedido[5], totalMerc[5], litragem[5], totalPedido =0 ;
 	char tipo;
 	printf("\n Informe o caixa troco: ");
 	scanf("%f", &troco);
@@ -46,66 +47,68 @@ int main(void){
 					printf("\n Quantos reais de combustível você deseja? ");
 					scanf("%f", &rCombustivel);
 				}while(rCombustivel <= 0);
-				litragem = rCombustivel/pCombustivel;
+				litragem[n] = rCombustivel/pCombustivel;
 			break;
 		case 2:
 			
 			do{
 				printf("\n Qual mercadoria você deseja?");
-				printf("\n 1- Bala 	         R$0,20");
-				printf("\n 2- Pirulito 	     R$0,50");
-				printf("\n 3- Chocolate 	 R$5,00");
-				printf("\n 4- Salgadinho     R$3,00");
-				printf("\n 5- Refrigerante   R$6,00");
+				printf("\n 1- Bala 	         - R$0,20");
+				printf("\n 2- Pirulito 	     - R$0,50");
+				printf("\n 3- Chocolate 	 - R$5,00");
+				printf("\n 4- Salgadinho     - R$3,00");
+				printf("\n 5- Refrigerante   - R$6,00");
 				printf("\n Opcao: ");
 				scanf("%d", &merc);
+				if(merc <=0 && merc >5){
+					printf("\n Opção inválida, tente novamente.");
+				}
 			}while(merc <= 0 && merc > 5);
 			do{
 				printf("\n Quantas unidades desta mercadoria você deseja? ");
-				scanf("%d", &quantMerc);
+				scanf("%d", &quantMerc[quantProd]);
 				if(quantMerc <= 0){
 					printf("\n Quantidade inválida! Redigite.");
 						}
 			}while(quantMerc <= 0);
+			
 			switch(merc){
 				case 1:
-					valMerc = 0.20;
+					valMerc[quantProd] = 0.20;
 					break;
 				case 2:
-					valMerc = 0.50;
+					valMerc[quantProd] = 0.50;
 					break;
 				case 3:
-					valMerc = 5.00;
+					valMerc[quantProd] = 5.00;
 					break;
 				case 4:
-					valMerc = 3.00;
+					valMerc[quantProd] = 3.00;
 					break;
 				case 5:
-					valMerc = 6.00;
+					valMerc[quantProd] = 6.00;
 					break;
 				}
-				quantProd++;
 				mercadorias[merc - 1] += 1;
-				totalMerc = quantMerc * valMerc;
+				totalMerc[quantProd] = quantMerc[quantProd] * valMerc[quantProd];
+				quantProd++;
 				break;
 		case 3:
-			
-			pedido[n] = totalMerc + litragem;
 			printf("\n Pedido %d", n+1);
 			printf("\n Sua compra foi finalizada!");
 			if(quantProd != 0){
-				for(i=0; i<=quantProd; i++){
-					printf("Produto %d:",i+1);
-					
+				for(i=0; i<quantProd; i++){
+					totalPedido += totalMerc[i];
+					printf("\n Produto %d:",i+1);
+					printf("\n %d UN X %.2f         Total: %.2f R$", quantMerc[i], valMerc[i], totalMerc[i]);
 				}
 			}
-			printf("\n Valor de combustível total: %.2f \n", litragem);
+			pedido[n] = totalPedido + litragem[n];
+			printf("\n Valor de combustível total: %.2f R$ \n", litragem[n]);
+			printf("\n Valor total do pedido: %.2f R$\n", pedido[n]); 
 			n++;
-			totalMerc = 0;
-			litragem = 0;
-			quantMerc = 0;
-			valMerc = 0;
 			quantProd = 0;
+			totalPedido = 0;
 			break;
 		case 4:
 			
@@ -116,3 +119,4 @@ int main(void){
 	}while(op != 4);
 	return 0;
 }
+
