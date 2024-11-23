@@ -8,11 +8,22 @@
 
 int main(void){
 	setlocale(LC_ALL, "Portuguese");
-	int op, op2, n=0, p=0, i=0, quantMerc[MAX], quantProd=0, mercadorias[MAX]={0,0,0,0,0};
-	float cTroco, troco, dinheiro, pCombustivel, rCombustivel[MAX], valMerc[MAX], pedido[MAX]={0,0,0,0,0}, totalMerc[MAX], litragem[MAX], totalVendas=0, totalLitragem=0;
+	int op, op2, n, i=0, quantMerc[MAX], quantProd, mercadorias[MAX]={0,0,0,0,0};;
+	float cTroco, troco, dinheiro, pCombustivel, rCombustivel[MAX], valMerc[MAX], pedido[MAX] = {0,0,0,0,0}, totalMerc[MAX], litragem[MAX], totalVendas, totalLitragem;
 	char tipo;
+	
+	n = 0;  //variavel referente aos pedidos.
+	quantProd = 0; //variavel referente a quantidade de produtos em um pedido.
+	totalVendas = 0;  //variavel que armazena o total de valor recebido no dia de todos os pedidos, somando mercadorias e combustivel.
+	totalLitragem = 0; //variavel que armazena o total de litragem vendida em um dia em L.
+	
 	printf("\n Informe o caixa troco: ");
-	scanf("%f", &cTroco);
+	do{	
+		scanf("%f", &cTroco);
+		if(cTroco < 0){
+			printf("\n Valor inválido, favor digitar um número maior ou igual a 0. \n");
+		}
+	}while(cTroco < 0);
 	printf("\n Bem Vindo aos Postos Tradição! Escolha a opção que você deseja:");
 	do{
 		printf("\n 1 - Combustivel");
@@ -53,7 +64,6 @@ int main(void){
 				litragem[n] = rCombustivel[n]/pCombustivel;
 			break;
 		case 2:
-			
 			do{
 				printf("\n Qual mercadoria você deseja?");
 				printf("\n 1- Bala 	         - R$0,20");
@@ -94,7 +104,7 @@ int main(void){
 				}
 				mercadorias[op2 - 1] += quantMerc[quantProd];
 				totalMerc[quantProd] = quantMerc[quantProd] * valMerc[quantProd];
-				quantProd++;
+				quantProd++; //adiciona mais um produto no pedido atual.
 				break;
 		case 3:
 			do{
@@ -148,8 +158,8 @@ int main(void){
 			printf("\n Total de litros abastecidos: %.2f L", litragem[n]);
 			printf("\n Valor total do pedido: %.2f R$\n", pedido[n]); 
 			printf("\n Bem Vindo aos Postos Tradição! Escolha a opção que você deseja:");
-			n++;
-			quantProd = 0;
+			n++; //após finalizar um pedido, é somado na váriavel de pedido, para começar um novo.
+			quantProd = 0; //a quantidade de produtos é zerada, pois agora vamos começar um outro pedido
 			break;
 		case 4:
 			system("cls");
